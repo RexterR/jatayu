@@ -1,0 +1,23 @@
+{
+  "name": "crud_ad",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon -r dotenv/config src/index.js",
+    "start": "node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-validator": "^6.9.2",
+    "http-errors": "^1.8.0",
+    "mongoose": "^5.11.13"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  }
+}
