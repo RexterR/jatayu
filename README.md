@@ -13,3 +13,7 @@
 1. got to folder `fake_api_virtusa`
 2. Run `docker build .`
 3. Run the Image
+
+### To authenticate the route
+1. Login using Api to get access token
+2. Use that access token to authenticate the route
