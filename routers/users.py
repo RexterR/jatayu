@@ -94,13 +94,9 @@ async def login_user(userBody: UserCredential):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED)
 
 
-@router.get('/test')
-def test(user=Depends(get_current_user)):
-    return {'Success': True}
-
 
 @router.get('/employee')
-def return_all_employee():
+def return_all_employee(user=Depends(get_current_user)):
     try:
         List = []
         employees = empl.getAll()

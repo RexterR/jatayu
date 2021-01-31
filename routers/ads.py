@@ -1,9 +1,10 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
 from pydantic import BaseModel
 from bson.objectid import ObjectId
 import requests
 from db.ads import Ads
 from db.ticket import Ticket
+from depend import get_current_user
 router = APIRouter()
 adInstance = Ads()
 tckt = Ticket()
@@ -13,7 +14,7 @@ chargePerSec = 10
 
 
 @router.get('/ad')
-def get_ad_by_data():
+def get_ad_by_data(user=Depends(get_current_user)):
     try:
         adReq = requests.get(url=URL).json()
         allAds = adInstance.getAdsByGreaterThreshold(
@@ -35,18 +36,20 @@ def get_ad_by_data():
         diagnostics = adReq.get('diagnostics')
         if diagnostics:
             if diagnostics['display'] != 'OK':
-                tckt.create_ticket({'display':diagnostics['display']})
+                tckt.create_ticket({'display': diagnostics['display']})
             elif diagnostics['electricity'] != 'OK':
-                tckt.create_ticket({'electricity':diagnostics['electricity']})
+                tckt.create_ticket({'electricity': diagnostics['electricity']})
         return {'id': str(max['_id']), 'image': max['image'], 'duration': adDuration}
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+
+
 @router.get('/ticket')
-def get_ticket(id:str):
+def get_ticket(id: str, user=Depends(get_current_user)):
     try:
         ticket = tckt.getTicketbyEmploee(id)
         if not ticket:
             raise Exception('Ticket not found')
-        return {'jobs':ticket.get('job')}
+        return {'jobs': ticket.get('job')}
     except Exception as e:
-        raise HTTPException(status_code=400,detail=str(e))
+        raise HTTPException(status_code=400, detail=str(e))
