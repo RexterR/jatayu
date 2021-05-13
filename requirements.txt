@@ -38,7 +38,7 @@ progress==1.5
 promise==2.3
 pyasn1==0.4.8
 pycparser==2.20
-pydantic==1.7.3
+pydantic==1.7.4
 pymongo==3.11.2
 pyparsing==2.4.6
 python-dotenv==0.15.0
